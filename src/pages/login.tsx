@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { FaGithub } from 'react-icons/fa'
-import { SignInButton } from '../components/SignInButton'
 
-import { Container, Content } from '../styles/pages/Home'
+import { SignInButton } from '../components/SignInButton'
+import { Container, Content } from '../styles/pages/Login'
 
 const Login: NextPage = () => {
   return (
