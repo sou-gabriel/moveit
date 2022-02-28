@@ -22,6 +22,11 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  body {
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+  }
+
   button {
     cursor: pointer;
   }
