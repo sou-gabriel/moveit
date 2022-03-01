@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+
+import { CountdownContext } from '../../contexts/CountdownContext'
+
 import BodyIcon from '../../assets/icons/body.svg'
 import LevelUpIcon from '../../assets/icons/level-up.svg'
 
@@ -16,7 +20,7 @@ import {
 } from './styles'
 
 export const ChallengeBox = () => {
-  const hasCountdownEnded = true
+  const { hasCountdownEnded } = useContext(CountdownContext)
 
   return (
     <Container>
