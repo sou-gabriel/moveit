@@ -22,8 +22,11 @@ interface ChallengeContextData {
   challenge: Challenge | null
   experienceToNextLevel: number
   level: number
+  isNewLevelModalOpen: boolean
+  completedChallenges: number
   handleFailedChallenge: () => void
   handleCompletedChallenge: () => void
+  handleCloseNewLevelModal: () => void
 }
 
 interface ChallengeProviderProps {
@@ -35,8 +38,10 @@ export const ChallengeContext = createContext({} as ChallengeContextData)
 export const ChallengeProvider = ({ children }: ChallengeProviderProps) => {
   const { hasCountdownEnded, resetCountdown } = useContext(CountdownContext)
   const [challenge, setChallenge] = useState<Challenge | null>({} as Challenge)
+  const [completedChallenges, setCompletedChallenges] = useState(0)
   const [currentExperience, setCurrentExperience] = useState(0)
   const [level, setLevel] = useState(1)
+  const [isNewLevelModalOpen, setIsNewLevelModalOpen] = useState(false)
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
@@ -61,13 +66,22 @@ export const ChallengeProvider = ({ children }: ChallengeProviderProps) => {
 
       if (isItToLevelUp) {
         finalExperience -= experienceToNextLevel
+
         setLevel(prevLevel => prevLevel + 1)
+        setIsNewLevelModalOpen(true)
       }
 
       setCurrentExperience(finalExperience)
+      setCompletedChallenges(
+        prevCompletedChallenges => prevCompletedChallenges + 1
+      )
       setChallenge(null)
       resetCountdown()
     }
+  }
+
+  const handleCloseNewLevelModal = () => {
+    setIsNewLevelModalOpen(false)
   }
 
   return (
@@ -78,8 +92,11 @@ export const ChallengeProvider = ({ children }: ChallengeProviderProps) => {
         challenge,
         experienceToNextLevel,
         level,
+        isNewLevelModalOpen,
+        completedChallenges,
         handleFailedChallenge,
         handleCompletedChallenge,
+        handleCloseNewLevelModal,
       }}
     >
       {children}

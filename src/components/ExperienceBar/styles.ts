@@ -20,6 +20,7 @@ export const ProgressBar = styled.div`
 `
 
 export const Progress = styled.div<ProgressProps>`
+  transition: width 0.8s ease-in-out;
   width: ${({ currentExperience }) => `${currentExperience}%`};
   height: 100%;
   border-radius: 5px;

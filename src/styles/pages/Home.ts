@@ -1,8 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Container = styled.div`
+interface ContainerProps {
+  isBlur: boolean
+}
+
+export const Container = styled.div<ContainerProps>`
   height: 100vh;
   display: flex;
+  ${({ isBlur }) =>
+    isBlur &&
+    css`
+      filter: blur(8px);
+    `}
 `
 
 export const Content = styled.main`

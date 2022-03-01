@@ -12,8 +12,12 @@ export const ExperienceBar = () => {
     <Container>
       <span>0 xp</span>
       <ProgressBar>
-        <Progress currentExperience={currentExperience} />
-        <CurrentExperience currentExperience={currentExperience}>
+        <Progress
+          currentExperience={(currentExperience / experienceToNextLevel) * 100}
+        />
+        <CurrentExperience
+          currentExperience={(currentExperience / experienceToNextLevel) * 100}
+        >
           {currentExperience} xp
         </CurrentExperience>
       </ProgressBar>

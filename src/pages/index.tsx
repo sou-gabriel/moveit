@@ -1,5 +1,8 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useContext } from 'react'
+
+import { ChallengeContext } from '../contexts/ChallengeContext'
 
 import { Header } from '../components/Header'
 import { ExperienceBar } from '../components/ExperienceBar'
@@ -17,13 +20,15 @@ import {
 } from '../styles/pages/Home'
 
 const Home: NextPage = () => {
+  const { isNewLevelModalOpen } = useContext(ChallengeContext)
+
   return (
     <>
       <Head>
         <title>Home | move.it</title>
       </Head>
 
-      <Container>
+      <Container isBlur={isNewLevelModalOpen}>
         <Header />
         <Content>
           <ExperienceBar />
