@@ -58,8 +58,13 @@ export const CycleMessage = styled.strong`
 
 export const InstructionBox = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  text-align: center;
+
+  > svg {
+    margin-bottom: 1rem;
+  }
 `
 
 export const Description = styled.p`
