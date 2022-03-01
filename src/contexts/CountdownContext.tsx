@@ -7,6 +7,7 @@ interface CountdownContextData {
   currentProgress: number
   handleStartCountdown: () => void
   handleAbandonCountdown: () => void
+  resetCountdown: () => void
 }
 
 interface CountdownProviderProps {
@@ -47,6 +48,12 @@ export const CountdownProvider = ({ children }: CountdownProviderProps) => {
     setIsCountdownActive(true)
   }
 
+  const resetCountdown = () => {
+    setTimeInSeconds(defaultTime)
+    setIsCountdownActive(false)
+    setHasCountdownEnded(false)
+  }
+
   const handleAbandonCountdown = () => {
     if (isCountdownActive) {
       clearTimeout(countdownId)
@@ -64,6 +71,7 @@ export const CountdownProvider = ({ children }: CountdownProviderProps) => {
         currentProgress,
         handleStartCountdown,
         handleAbandonCountdown,
+        resetCountdown,
       }}
     >
       {children}

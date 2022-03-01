@@ -1,8 +1,9 @@
 import { useContext } from 'react'
 
-import { CountdownContext } from '../../contexts/CountdownContext'
+import { ChallengeContext } from '../../contexts/ChallengeContext'
 
 import BodyIcon from '../../assets/icons/body.svg'
+import EyeIcon from '../../assets/icons/eye.svg'
 import LevelUpIcon from '../../assets/icons/level-up.svg'
 
 import {
@@ -20,28 +21,36 @@ import {
 } from './styles'
 
 export const ChallengeBox = () => {
-  const { hasCountdownEnded } = useContext(CountdownContext)
+  const {
+    hasCountdownEnded,
+    challenge,
+    handleFailedChallenge,
+    handleCompletedChallenge,
+  } = useContext(ChallengeContext)
 
   return (
     <Container>
-      {hasCountdownEnded ? (
+      {hasCountdownEnded && challenge ? (
         <>
           <Content>
-            <Header>Ganhe 400 xp</Header>
+            <Header>Ganhe {challenge.amount} xp</Header>
             <ChallengeInfo>
-              <BodyIcon />
+              {challenge.type === 'body' ? <BodyIcon /> : <EyeIcon />}
               <Title>Exercite-se</Title>
-              <Description>
-                É agora Diegão, bora lá meu parça. Caminhe por 3 minutos e
-                estique suas pernas pra você ficar saudável.
-              </Description>
+              <Description>{challenge.description}</Description>
             </ChallengeInfo>
           </Content>
           <Footer>
-            <FailedChallengeButton type="button" onClick={() => {}}>
+            <FailedChallengeButton
+              type="button"
+              onClick={handleFailedChallenge}
+            >
               Falhei
             </FailedChallengeButton>
-            <CompletedChallengeButton type="button" onClick={() => {}}>
+            <CompletedChallengeButton
+              type="button"
+              onClick={handleCompletedChallenge}
+            >
               Completei
             </CompletedChallengeButton>
           </Footer>
