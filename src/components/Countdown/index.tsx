@@ -24,6 +24,7 @@ export const Countdown = () => {
     hasCountdownEnded,
     currentProgress,
     handleStartCountdown,
+    handleAbandonCountdown,
   } = useContext(CountdownContext)
 
   const [minuteLeft, minuteRight] = String(Math.floor(timeInSeconds / 60))
@@ -54,7 +55,7 @@ export const Countdown = () => {
             <CheckCircleIcon />
           </CountdownEndButton>
         ) : (
-          <AbandonCountdownButton onClick={() => {}}>
+          <AbandonCountdownButton onClick={handleAbandonCountdown}>
             Abandonar ciclo
             <CloseIcon />
             <ProgressBar currentProgress={currentProgress}>

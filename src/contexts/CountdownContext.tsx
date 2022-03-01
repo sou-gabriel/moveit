@@ -6,6 +6,7 @@ interface CountdownContextData {
   hasCountdownEnded: boolean
   currentProgress: number
   handleStartCountdown: () => void
+  handleAbandonCountdown: () => void
 }
 
 interface CountdownProviderProps {
@@ -15,6 +16,8 @@ interface CountdownProviderProps {
 export const CountdownContext = createContext({} as CountdownContextData)
 
 const defaultTime = 0.1 * 60
+
+let countdownId: NodeJS.Timeout
 
 export const CountdownProvider = ({ children }: CountdownProviderProps) => {
   const [timeInSeconds, setTimeInSeconds] = useState(defaultTime)
@@ -27,7 +30,7 @@ export const CountdownProvider = ({ children }: CountdownProviderProps) => {
     const shouldDecrementTime = isCountdownActive && timeInSeconds > 0
 
     if (shouldDecrementTime) {
-      setTimeout(() => {
+      countdownId = setTimeout(() => {
         setTimeInSeconds(prevTimeInSeconds => prevTimeInSeconds - 1)
       }, 1000)
       return
@@ -44,6 +47,14 @@ export const CountdownProvider = ({ children }: CountdownProviderProps) => {
     setIsCountdownActive(true)
   }
 
+  const handleAbandonCountdown = () => {
+    if (isCountdownActive) {
+      clearTimeout(countdownId)
+      setIsCountdownActive(false)
+      setTimeInSeconds(defaultTime)
+    }
+  }
+
   return (
     <CountdownContext.Provider
       value={{
@@ -52,6 +63,7 @@ export const CountdownProvider = ({ children }: CountdownProviderProps) => {
         hasCountdownEnded,
         currentProgress,
         handleStartCountdown,
+        handleAbandonCountdown,
       }}
     >
       {children}
