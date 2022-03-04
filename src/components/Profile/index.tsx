@@ -6,19 +6,21 @@ import LevelIcon from '../../assets/icons/level.svg'
 
 import { Container, Avatar, Username, Level } from './styles'
 
-export const Profile = () => {
+interface ProfileProps {
+  user: {
+    name: string
+    image: string
+  }
+}
+
+export const Profile = ({ user }: ProfileProps) => {
   const { level } = useContext(ChallengeContext)
 
   return (
     <Container>
-      <Avatar
-        src="https://github.com/sou-gabriel.png"
-        alt="Gabriel Ramos"
-        width={88}
-        height={88}
-      />
+      <Avatar src={user.image} alt={user.name} width={88} height={88} />
       <div>
-        <Username>Gabriel Ramos</Username>
+        <Username>{user.name}</Username>
         <Level>
           <LevelIcon />
           Level {level}

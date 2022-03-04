@@ -1,4 +1,5 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
+import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useContext } from 'react'
 
@@ -19,7 +20,14 @@ import {
   ChallengeContainer,
 } from '../styles/pages/Home'
 
-const Home: NextPage = () => {
+interface HomeProps {
+  user: {
+    name: string
+    image: string
+  }
+}
+
+const Home = ({ user }: HomeProps) => {
   const { isNewLevelModalOpen } = useContext(ChallengeContext)
 
   return (
@@ -34,7 +42,7 @@ const Home: NextPage = () => {
           <ExperienceBar />
           <Section>
             <CountdownContainer>
-              <Profile />
+              <Profile user={user} />
               <CompletedChallenges />
               <Countdown />
             </CountdownContainer>
@@ -46,6 +54,28 @@ const Home: NextPage = () => {
       </Container>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+    }
+  }
+
+  return {
+    props: {
+      user: {
+        name: session.user!.name,
+        image: session.user!.image,
+      },
+    },
+  }
 }
 
 export default Home
