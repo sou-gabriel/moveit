@@ -9,7 +9,7 @@ export const SignInButton = () => {
       type="button"
       onClick={() =>
         signIn('github', {
-          callbackUrl: 'http://localhost:3000/dashboard',
+          callbackUrl: 'http://localhost:3000/',
         })
       }
     >
